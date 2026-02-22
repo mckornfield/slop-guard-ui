@@ -753,7 +753,12 @@ function updateSidebar(result) {
     }
   }
   if (result.advice && result.advice.length > 0) {
-    adviceListEl.innerHTML = result.advice.slice(0, 30).map(a => {
+    const sorted = [...result.advice].sort((a, b) => {
+      const pa = adviceToPos.has(a) ? adviceToPos.get(a) : Infinity;
+      const pb = adviceToPos.has(b) ? adviceToPos.get(b) : Infinity;
+      return pa - pb;
+    });
+    adviceListEl.innerHTML = sorted.slice(0, 30).map(a => {
       const pos = adviceToPos.get(a);
       const attr = pos !== undefined ? ` data-from="${pos}" title="Click to jump to this in the editor"` : '';
       return `<li${attr}>${escHtml(a)}</li>`;
