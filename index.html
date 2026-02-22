@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Slop Guard</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+<!-- Apply dark mode before first paint to avoid flash -->
+<script>if(window.matchMedia('(prefers-color-scheme: dark)').matches){document.documentElement.classList.add('dark-pre')}</script>
+
+<!-- CodeMirror 5 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/base16-light.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/markdown/markdown.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/keymap/vim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/addon/display/placeholder.min.js"></script>
+
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+  <h1>&#x1F6E1; Slop Guard</h1>
+  <button id="vim-btn" title="Toggle Vim keybindings">Vim: OFF</button>
+  <button id="theme-btn" title="Toggle dark mode">&#x2600; Light</button>
+</header>
+
+<main>
+  <div id="editor-wrap">
+    <textarea id="editor" placeholder="Paste or type text here to analyze it for AI slop patterns…"></textarea>
+  </div>
+
+  <aside id="sidebar">
+    <!-- Score -->
+    <div class="sb-section">
+      <div class="sb-label">Score</div>
+      <div id="score-num" class="band-clean">100</div>
+      <div id="score-band" class="band-clean">clean</div>
+      <div id="score-words">0 words</div>
+    </div>
+
+    <!-- Category counts -->
+    <div class="sb-section">
+      <div class="sb-label">Highlights</div>
+      <div id="cat-rows"></div>
+    </div>
+
+    <!-- Warnings (document-level) -->
+    <div class="sb-section" id="warn-section">
+      <div class="sb-label">&#x26A0; Warnings</div>
+      <div style="font-size:0.68rem;color:var(--muted);margin-bottom:0.4rem">Document-level: rhythm, colon/bullet/blockquote density, horizontal rules</div>
+      <div id="warn-list"><span class="empty-msg">none detected</span></div>
+    </div>
+
+    <!-- Advice -->
+    <div class="sb-section">
+      <div class="sb-label">Advice</div>
+      <ul class="advice-list" id="advice-list"><li class="empty-msg">start typing…</li></ul>
+    </div>
+  </aside>
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>
